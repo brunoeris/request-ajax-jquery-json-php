@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Ajax requisição json</title>
+	<link rel="stylesheet" href="css/estilos.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+	<link rel="stylesheet" href="css/formatalayout.css">
+	<script type="text/javascript" src="js/jquery.js"></script>
+</head>
+<body>
+
+	<nav class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<div class="container">
+				<buttom class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
+					<!--<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>-->
+				</buttom>
+
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<!--<li><a href="index.php">HOME</a></li>-->
+					</ul>
+					<form action="" class="navbar-form pull-right">
+						<input type="text" class="span2" placeholder="Apenas decorativo! ;)">
+							<button class="btn btn-inverse">Buscar</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<header class="jumbotron subhead">
+		<div class="container">
+			<h1>AJAX - JQUERY - JSON - PHP</h1>
+		</div>
+	</header>
+
+	
+	<div class="container">
+		<div class="row">
+		<br>
+		<br>
+		<form action="insert.php" method="post">
+			<fieldset>
+				<input type="text" name="nome" placeholder="Nome" required><br>
+				<input type="text" name="sobrenome" placeholder="Sobrenome" required><br>
+				<input type="text" name="cidade" placeholder="Cidade" required><br>
+				<input class="btn" type="submit" value="Enviar">
+			</fieldset>
+		</form>
+		<br>
+		<br>
+		<br>
+		<button id="listar" class="btn">Listar</button>
+		<button id="guardar" class="btn">Guardar</button>
+		<div id="aqui"></div>
+
+		</div>
+	</div>
+
+	
+
+	<!-- Footer
+    ================================================== -->
+    <footer class="footer">
+      <div class="container">
+        <p>Material de estudo, contribua em: <a href="https://github.com/brunoeris" target="_blank">GitHub/brunoeris</a> // EMAIL: brunoeriss@gmail.com.</p>
+      	<br><p class="pull-right"><a href="#">Voltar ao topo</a></p>
+      </div>
+    </footer>
+
+	
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+
+		$(document).ready(function() {
+			$('#aqui').hide(0);
+		});
+
+		//inicio o jquery
+		$('#listar').click(function() {
+			$("#aqui").show("slow");
+		// inicio uma requisição
+		    $.ajax({
+		    // url para o arquivo json.php
+		        url : "json.php",
+		    // dataType json
+		        dataType : "json",
+		    // função para de sucesso
+		        success : function(data){
+		        // vamos gerar um html e guardar nesta variável
+		            var html = "";  
+		        
+		        // executo este laço para ecessar os itens do objeto javaScript
+		            for($i=0; $i < data.length; $i++){
+		            	html +="<div class='aqui'>";
+		            // coloco o nome e sobre nome
+		                html += "<strong>Nome:</strong> "+data[$i].nome +" "+ data[$i].sobrenome;
+		            // coloco a cidade
+		                html += " <strong>Cidade:</strong> "+data[$i].cidade
+		            // e por ultimo dou uma quebra de linha
+		                html += "<br>";
+		                html +="</div>";
+		            }//fim do laço
+		             
+		        //coloco a variável html na tela
+		         	$('#aqui').html(html);
+		        }
+		    });//termina o ajax
+		});//termina o jquery
+
+		$('#guardar').click(function() {
+			$('#aqui').hide('slow');
+		});
+	</script>
+</body>
+</html>
